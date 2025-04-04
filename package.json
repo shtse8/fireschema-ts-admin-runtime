@@ -6,8 +6,8 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "clean": "npx rimraf dist",
-    "build": "npx rimraf dist && tsc -b",
+    "clean": "rm -rf dist",
+    "build": "rm -rf dist && tsc -b",
     "test": "npx jest"
   },
   "keywords": [
