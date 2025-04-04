@@ -187,11 +187,17 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  // Cleanup Firestore resources if necessary
+  // Optional: Attempt cleanup before deleting the app
+  console.log('Attempting admin cleanup...');
+  await cleanupCollection(testAdminCollection.ref);
+  await cleanupCollection(testAdminCollectionWithSchema.ref);
+  console.log('Admin cleanup attempted.');
+
+  // Delete the app instance
   await app.delete();
   // Unset the environment variable
   delete process.env.FIRESTORE_EMULATOR_HOST;
-  console.log('Admin SDK disconnected from Firestore emulator.');
+  console.log('Admin SDK disconnected from Firestore emulator and app deleted.');
   // process.exit(0); // Force exit in CI - Causes Jest worker crash
 });
 
@@ -224,6 +230,8 @@ beforeEach(async () => {
 
 
 describe('Admin Runtime Integration Tests', () => {
+  jest.setTimeout(120000); // Increase timeout to 120 seconds (2 minutes) for integration tests
+
 
   it('should add a document and retrieve it', async () => {
     const dataToAdd: TestAdminAddData = { serviceName: 'Admin Test Service', status: 'active' };

@@ -32,12 +32,21 @@ jobs:
       - name: Install dependencies
         run: npm install # Use 'bun install' if using Bun. Changed from npm ci due to potential lockfile issues.
 
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+
+
+      - name: Start Firestore Emulator
+        run: |
+          nohup firebase emulators:start --only firestore --project=demo-project-id &
+          sleep 10 # Wait for emulator to start
+
       - name: Build package
         run: npm run build # Use 'bun run build' if using Bun
 
       - name: Run tests
         run: npm test # Use 'bun test' if using Bun
-        # TODO: Add Firestore emulator setup if integration tests require it
 
       - name: Publish package to npm
         run: npm publish --provenance --access public
