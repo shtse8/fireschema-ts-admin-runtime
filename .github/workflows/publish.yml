@@ -1,17 +1,17 @@
 # .github/workflows/publish.yml in fireschema-ts-admin-runtime repo
-name: Publish Package to npm
+name: Publish TS Admin Runtime
 
 on:
   push:
     tags:
-      - 'v*.*.*' # Trigger on version tags like v1.0.0
+      - 'v*.*.*' # Trigger on version tags like v1.2.3
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Needed to publish to npm registry
+      id-token: write # Required for provenance generation
 
     steps:
       - name: Checkout repository
@@ -20,19 +20,26 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Using Node.js 20
-          registry-url: 'https://registry.npmjs.org' # Specify npm registry
+          node-version: '20' # Or the version specified in package.json engines
+          registry-url: 'https://registry.npmjs.org/'
+
+      # Optional: Setup Bun if preferred for install/build/test
+      # - name: Setup Bun
+      #   uses: oven-sh/setup-bun@v1
+      #   with:
+      #     bun-version: latest
 
       - name: Install dependencies
-        run: npm ci # Use clean install for CI
+        run: npm ci # Use 'bun install --frozen-lockfile' if using Bun
 
       - name: Build package
-        run: npm run build # Assumes 'build' script in package.json
+        run: npm run build # Use 'bun run build' if using Bun
 
       - name: Run tests
-        run: npm test # Assumes 'test' script in package.json
+        run: npm test # Use 'bun test' if using Bun
+        # TODO: Add Firestore emulator setup if integration tests require it
 
-      - name: Publish package
-        run: npm publish --access public # Publish to npm
+      - name: Publish package to npm
+        run: npm publish --provenance --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # Requires NPM_TOKEN secret in repo settings
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # Secret stored in the repository settings
