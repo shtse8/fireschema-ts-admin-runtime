@@ -30,7 +30,7 @@ jobs:
       #     bun-version: latest
 
       - name: Install dependencies
-        run: npm ci # Use 'bun install --frozen-lockfile' if using Bun
+        run: npm install # Use 'bun install' if using Bun. Changed from npm ci due to potential lockfile issues.
 
       - name: Build package
         run: npm run build # Use 'bun run build' if using Bun

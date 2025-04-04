@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "clean": "npx rimraf dist",
-    "build": "bun run clean && tsc -b",
+    "build": "npx rimraf dist && tsc -b",
     "test": "npx jest"
   },
   "keywords": [
