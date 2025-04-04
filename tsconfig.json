@@ -3,9 +3,13 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "target": "ES2017", // Set target to support private identifiers
+    "module": "NodeNext",
     "composite": true, // Enable project references
+    "moduleResolution": "NodeNext",
     "declaration": true,
+    "lib": ["ES2017", "DOM"],
     "declarationMap": true,
+    "skipLibCheck": true,
     "sourceMap": true, // Added comma here
     "esModuleInterop": true // Add this line to address jest warning
   },
