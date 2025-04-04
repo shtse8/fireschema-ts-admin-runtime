@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
+    "target": "ES2017", // Set target to support private identifiers
     "composite": true, // Enable project references
     "declaration": true,
     "declarationMap": true,
