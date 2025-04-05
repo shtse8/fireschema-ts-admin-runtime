@@ -143,13 +143,8 @@ export class AdminBaseCollectionRef<
   >(
     parentId: string,
     subCollectionId: string,
-    SubCollectionClass: new (
-      firestore: Firestore,
-      collectionId: string,
-      schema?: CollectionSchema,
-      parentRef?: DocumentReference<DocumentData>
-    ) => SubCollectionType,
-    subSchema?: CollectionSchema
+    // SubCollectionClass parameter removed as it's resolved from the schema definition
+    subSchema?: CollectionSchema // Keep subSchema for potential future use or validation? Let's keep for now.
   ): SubCollectionType {
     // 1. Check schema existence
     if (!this.schema?.subCollections || !this.schema.subCollections[subCollectionId]) {
