@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20' # Or the version specified in package.json engines
+          node-version: '24' # Or the version specified in package.json engines
           registry-url: 'https://registry.npmjs.org/'
 
       # Optional: Setup Bun if preferred for install/build/test
